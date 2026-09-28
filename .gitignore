@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Secrets
+.env
+.env.*
+*.pem
+*.key
+
+# Local backups
+*.bak
+backup/
+
+# OS
+.DS_Store

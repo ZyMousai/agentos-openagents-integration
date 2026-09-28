@@ -1,0 +1,15 @@
+services:
+  a2a-adapter:
+    build: .
+    container_name: a2a-adapter
+    restart: unless-stopped
+
+    environment:
+      AGENTOS_URL: http://host.docker.internal:8000
+      AGENT_ID: platform-builder
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    ports:
+      - "8200:8200"

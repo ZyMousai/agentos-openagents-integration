@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-RUNTIME_DIR="$HOME/openagents-agentos-runtime"
+RUNTIME_DIR="$(cd "$(dirname "$0")" && pwd)"
 LAUNCHER="$HOME/.openagents/nodejs/node_modules/@openagents-org/agent-launcher"
 
 echo "== OpenAgents AgentOS Runtime Installer =="
@@ -142,10 +142,14 @@ python3 -m json.tool "$LAUNCHER/registry.json" >/dev/null
 
 node -e "
 const a=require('$LAUNCHER/src/adapters');
-if (!a.getAdapter('agentos')) process.exit(1);
+
+if (!a.ADAPTER_MAP || !a.ADAPTER_MAP.agentos) {
+  console.error('AgentOS adapter not registered');
+  process.exit(1);
+}
+
 console.log('AgentOS adapter load OK');
 "
-
 echo
 echo "AgentOS runtime patch installed successfully."
 echo "Restarting OpenAgents daemon..."
